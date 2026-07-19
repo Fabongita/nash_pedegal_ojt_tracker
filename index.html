@@ -3,119 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fabong | OJT Documents</title>
-
+    <title>Francisco M. Pedrigal III | OJT Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
     <main class="container">
-
-        <!-- Profile Section -->
         <section class="profile-section">
-
-            <h1>Francisco M. Pedrigal III</h1>
-
-            <p class="course">Bachelor of Science in Computer Engineering</p>
-
-            <p class="section">
-                Section: <strong>2-6</strong>
-            </p>
-
-        </section>
-
-        <!-- OJT Documents -->
-        <section class="documents-section">
-
-            <h2>OJT Documents</h2>
-
-            <p class="description">
-                Click any document below to view or download the submitted file.
-            </p>
-
-            <div class="documents-grid">
-
-                <a href="files/cover-page.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Cover Page</span>
-                </a>
-
-                <a href="files/approval-sheet.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Approval Sheet</span>
-                </a>
-
-                <a href="files/company-profile.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Company Profile</span>
-                </a>
-
-                <a href="files/letter-of-intent.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Letter of Intent (LOI)</span>
-                </a>
-
-                <a href="files/letter-of-endorsement.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Letter of Endorsement (LOE)</span>
-                </a>
-
-                <a href="files/student-waiver.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Student Waiver</span>
-                </a>
-
-                <a href="files/internship-agreement.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Internship Agreement</span>
-                </a>
-
-                <a href="files/consent-form.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Consent Form</span>
-                </a>
-
-                <a href="files/cv.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Curriculum Vitae (CV)</span>
-                </a>
-
-                <a href="files/insurance.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Insurance</span>
-                </a>
-
-                <a href="files/medical-certificate.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Medical Certificate</span>
-                </a>
-
-                <a href="files/monthly-report.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Monthly Report</span>
-                </a>
-
-                <a href="files/certificate-of-completion.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Certificate of Completion</span>
-                </a>
-
-                <a href="files/trainee-evaluation.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Trainee Evaluation</span>
-                </a>
-
-                <a href="files/performance-evaluation.pdf" target="_blank" class="document-card">
-                    📄
-                    <span>Performance Evaluation</span>
-                </a>
-
+            <img src="profile.jpg" alt="Profile" class="profile-pic">
+            <div class="profile-info">
+                <h1>Francisco M. Pedrigal III</h1>
+                <p class="course">Bachelor of Science in Computer Engineering</p>
+                <p class="section">Section: <strong>2-6</strong></p>
+                <p class="company">Company: <strong>Xurpas, Inc.</strong></p>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span>Internship Progress</span>
+                        <span>99.57 / 400 Hours</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 24.89%;"></div>
+                    </div>
+                </div>
             </div>
-
         </section>
 
+        <section class="documents-section">
+            <h2>OJT Documents</h2>
+            <div class="documents-grid">
+                <a href="LOI.jpg" class="document-card"><span>Letter of Intent </span></a>
+                <a href="LOE.jpg" class="document-card"><span>Letter of Endorsement </span></a>
+                <a href="medcert.jpg" class="document-card"><span>Medical Certificate </span></a>
+            </div>
+        </section>
     </main>
 
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <img id="imageViewer" src="" alt="Document">
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById("imageModal");
+        const viewer = document.getElementById("imageViewer");
+        const closeBtn = document.querySelector(".close-btn");
+
+        document.querySelectorAll(".document-card").forEach(card => {
+            card.addEventListener("click", function(e) {
+                e.preventDefault();
+                viewer.src = this.getAttribute("href");
+                modal.style.display = "flex";
+            });
+        });
+
+        closeBtn.onclick = () => { modal.style.display = "none"; };
+        window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
+    </script>
 </body>
 </html>
