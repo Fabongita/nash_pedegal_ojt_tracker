@@ -9,6 +9,7 @@
 <body>
 
     <main class="container">
+        <!-- Profile Section -->
         <section class="profile-section">
             <img src="profile.jpg" alt="Profile" class="profile-pic">
             <div class="profile-info">
@@ -29,20 +30,30 @@
             </div>
         </section>
 
+        <!-- Documents Section -->
         <section class="documents-section">
             <h2>OJT Documents</h2>
             <div class="documents-grid">
-                <a href="LOI.jpg" class="document-card"><span>Letter of Intent </span></a>
-                <a href="LOE.jpg" class="document-card"><span>Letter of Endorsement </span></a>
-                <a href="medcert.jpg" class="document-card"><span>Medical Certificate </span></a>
+                <a href="LOI.jpg" class="document-card"><span>Letter of Intent (LOI)</span></a>
+                <a href="LOE.jpg" class="document-card"><span>Letter of Endorsement (LOE)</span></a>
+                <a href="medcert.jpg" class="document-card"><span>Medical Certificate</span></a>
+                
+                <!-- MOA Multi-page Button -->
+                <a href="#" class="document-card" data-images="XURPAS_20ENTERPRISE_20INC (1)_page-0001.jpg,XURPAS_20ENTERPRISE_20INC (1)_page-0002.jpg,XURPAS_20ENTERPRISE_20INC (1)_page-0003.jpg,XURPAS_20ENTERPRISE_20INC (1)_page-0004.jpg">
+                    <span>Memorandum of Agreement (MOA)</span>
+                </a>
             </div>
         </section>
     </main>
 
+    <!-- Modal for Image and Gallery Viewing -->
     <div id="imageModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
+            <button class="nav-btn prev-btn">&#10094;</button>
             <img id="imageViewer" src="" alt="Document">
+            <button class="nav-btn next-btn">&#10095;</button>
+            <div id="imageCounter" class="image-counter"></div>
         </div>
     </div>
 
@@ -50,14 +61,51 @@
         const modal = document.getElementById("imageModal");
         const viewer = document.getElementById("imageViewer");
         const closeBtn = document.querySelector(".close-btn");
+        const prevBtn = document.querySelector(".prev-btn");
+        const nextBtn = document.querySelector(".next-btn");
+        const counter = document.getElementById("imageCounter");
+
+        let currentImages = [];
+        let currentIndex = 0;
 
         document.querySelectorAll(".document-card").forEach(card => {
             card.addEventListener("click", function(e) {
                 e.preventDefault();
-                viewer.src = this.getAttribute("href");
+                const imagesAttr = this.getAttribute("data-images");
+                
+                if (imagesAttr) {
+                    currentImages = imagesAttr.split(",");
+                    currentIndex = 0;
+                    updateModal();
+                    prevBtn.style.display = "block";
+                    nextBtn.style.display = "block";
+                    counter.style.display = "block";
+                } else {
+                    currentImages = [this.getAttribute("href")];
+                    currentIndex = 0;
+                    updateModal();
+                    prevBtn.style.display = "none";
+                    nextBtn.style.display = "none";
+                    counter.style.display = "none";
+                }
                 modal.style.display = "flex";
             });
         });
+
+        function updateModal() {
+            viewer.src = currentImages[currentIndex];
+            counter.textContent = `Page ${currentIndex + 1} of ${currentImages.length}`;
+        }
+
+        prevBtn.onclick = () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : currentImages.length - 1;
+            updateModal();
+        };
+
+        nextBtn.onclick = () => {
+            currentIndex = (currentIndex < currentImages.length - 1) ? currentIndex + 1 : 0;
+            updateModal();
+        };
 
         closeBtn.onclick = () => { modal.style.display = "none"; };
         window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
